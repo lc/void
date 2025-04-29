@@ -29,6 +29,6 @@ jobs:
           version: latest
 
       - name: Run Goreleaser
-        run: goreleaser release --clean
+        run: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
