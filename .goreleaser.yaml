@@ -1,0 +1,52 @@
+version: 1
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+
+builds:
+  - id: void
+    main: ./cmd/void
+    binary: void
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - "-X github.com/lc/void/internal/buildinfo.Version={{.Version}} -X github.com/lc/void/internal/buildinfo.Commit={{.ShortCommit}}"
+
+  - id: voidd
+    main: ./cmd/voidd
+    binary: voidd
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - "-X github.com/lc/void/internal/buildinfo.Version={{.Version}} -X github.com/lc/void/internal/buildinfo.Commit={{.ShortCommit}}"
+
+archives:
+  - id: default
+    builds:
+      - void
+      - voidd
+    format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_{{ .Os }}_{{ if eq .Arch "amd64" }}x86_64{{ else if eq .Arch "arm64" }}arm64{{ else }}{{ .Arch }}{{ end }}
+    files:
+      - LICENSE
+      - README.md
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
