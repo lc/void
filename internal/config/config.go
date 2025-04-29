@@ -103,9 +103,7 @@ func Default() *Config {
 
 // Load loads the configuration from the specified path.
 func (p *FSProvider) Load() (*Config, error) {
-	if err := p.ensureConfigDir(); err != nil {
-		return nil, fmt.Errorf("ensuring config directory: %w", err)
-	}
+	_ = p.ensureConfigDir()
 
 	cfg, err := p.loadAndParse()
 	if err != nil {
