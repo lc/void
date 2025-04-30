@@ -4,7 +4,7 @@
 package buildinfo
 
 // Version is set at link-time with –ldflags.
-var Version = "v1.0.1"
+var Version = "v1.0.2"
 
 // Commit is set at link-time with –ldflags.
 // Default is "unknown" so tests and "go run ." still work.

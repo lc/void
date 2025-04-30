@@ -128,6 +128,7 @@ Durations use Go duration syntax (e.g., "30s", "5m", "2h", "1h30m").`,
 		},
 	}
 
+	showPermanent := false
 	// ---- list command ----
 	listCmd := &cobra.Command{
 		Use:     "list",
@@ -136,7 +137,7 @@ Durations use Go duration syntax (e.g., "30s", "5m", "2h", "1h30m").`,
 		Long: `List all currently active domain blocking rules.
 Shows domain, rule ID, whether the rule is permanent, and when it expires (if temporary).`,
 		Example: "void list",
-		RunE: func(_ *cobra.Command, _ []string) error {
+		RunE: func(cmd *cobra.Command, _ []string) error {
 			ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 			defer cancel()
 			rules, err := cli.Rules(ctx)
@@ -176,7 +177,9 @@ Shows domain, rule ID, whether the rule is permanent, and when it expires (if te
 				if r.Permanent {
 					permanent = "Yes"
 				}
-
+				if r.Permanent && !showPermanent {
+					continue
+				}
 				table.Append([]string{r.ID, r.Domain, permanent, expires})
 			}
 
@@ -185,6 +188,8 @@ Shows domain, rule ID, whether the rule is permanent, and when it expires (if te
 			return nil
 		},
 	}
+
+	listCmd.Flags().BoolVarP(&showPermanent, "permanent", "p", false, "Show permanent rules only")
 
 	root.AddCommand(blockCmd, listCmd, versionCmd)
 	if err := root.Execute(); err != nil {
