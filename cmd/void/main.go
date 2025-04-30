@@ -62,8 +62,9 @@ The tool uses macOS packet filter (pf) to block domains at the network level.`,
 	}
 	// ---- block command ----
 	blockCmd := &cobra.Command{
-		Use:   "block <domain> [duration]",
-		Short: "Block a domain (permanent unless duration provided)",
+		Use:     "block <domain> [duration]",
+		Aliases: []string{"b"},
+		Short:   "Block a domain (permanent unless duration provided)",
 		Long: `Block a domain either permanently or for a specified duration.
 If no duration is provided, the domain will be blocked permanently
 (requires confirmation).
@@ -129,8 +130,9 @@ Durations use Go duration syntax (e.g., "30s", "5m", "2h", "1h30m").`,
 
 	// ---- list command ----
 	listCmd := &cobra.Command{
-		Use:   "list",
-		Short: "List currently active rules",
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List currently active rules",
 		Long: `List all currently active domain blocking rules.
 Shows domain, rule ID, whether the rule is permanent, and when it expires (if temporary).`,
 		Example: "void list",

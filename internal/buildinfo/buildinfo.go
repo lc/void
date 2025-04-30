@@ -4,9 +4,8 @@
 package buildinfo
 
 // Version is set at link-time with –ldflags.
-// Default is “dev” so tests and “go run .” still work.
-var Version = "dev"
+var Version = "v1.0.1"
 
 // Commit is set at link-time with –ldflags.
-// Default is “unknown” so tests and “go run .” still work.
+// Default is "unknown" so tests and "go run ." still work.
 var Commit = "unknown"

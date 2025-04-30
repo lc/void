@@ -280,7 +280,7 @@ func renderBlock(w io.Writer, r rules.Rule) {
 }
 
 // parseBlock decodes one rule block that starts with
-// “# === VOID-RULE <uuid> BEGIN ===” and ends with “… END ===”.
+// "# === VOID-RULE <uuid> BEGIN ===" and ends with "… END ===".
 func parseBlock(b []byte) (rules.Rule, error) {
 	scan := bufio.NewScanner(bytes.NewReader(b))
 

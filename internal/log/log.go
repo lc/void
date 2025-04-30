@@ -19,9 +19,9 @@ func newLogger() *zap.SugaredLogger {
 	cfg := zap.NewProductionConfig()
 	cfg.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
 
-	LOG_LEVEL := os.Getenv("LOG_LEVEL")
-	if LOG_LEVEL != "" {
-		switch LOG_LEVEL {
+	logLevel := os.Getenv("LOG_LEVEL")
+	if logLevel != "" {
+		switch logLevel {
 		case "debug":
 			cfg.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 		default:
